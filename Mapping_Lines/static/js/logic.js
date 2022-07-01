@@ -10,14 +10,17 @@ let map = L.map('mapid').setView([37.6213, -122.3790],5);
 // mapbox/outdoors-v11, mapbox/light-v10, mapbox/dark-v10, mapbox/satellite-v9, mapbox/satellite-streets-v11
 
 // tileLayer() method
-let streets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+let streets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v11/tiles/{z}/{x}/{y}?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 18,
-    id: 'mapbox/outdoors-v11',
+    id: 'satellite-streets-v11',
     tileSize: 512,
     zoomOffset: -1,
     accessToken: API_KEY
 });
+
+
+
 // Then we add our 'graymap' tile layer to the map.
 streets.addTo(map);
 
