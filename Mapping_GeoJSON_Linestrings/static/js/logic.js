@@ -7,8 +7,8 @@ console.log("working");
 // mapbox/outdoors-v11, mapbox/light-v10, mapbox/dark-v10, mapbox/satellite-v9, mapbox/satellite-streets-v11
 
 // tileLayer() method
-let light = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v11/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+let light = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery c <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 18,
     accessToken: API_KEY
 });
@@ -30,7 +30,7 @@ let baseMap = {
 let map = L.map('mapid', {
     center: [44.0, -80.0],
     zoom: 2,
-    layers: [streets]
+    layers: [light]
 });
 
 L.control.layers(baseMap).addTo(map);
@@ -40,12 +40,21 @@ L.control.layers(baseMap).addTo(map);
 let torontoData = "https://raw.githubusercontent.com/Enagai-nagai/Mapping_Earthquakes/main/torontoRoutes.json";
 
 
+// Create a style for the lines
+let myStyle = {
+    color: "#ffffa1",
+    weight: 2
+}
+
 // Grabbing our GeoJSON data.
-d3.json(airportData).then(function(data) {
+d3.json(torontoData).then(function(data) {
     console.log(data);
     // Creating a GeoJSON layer with the retrieved data.
-    L.geoJson(data).addTo(map);
+    L.geoJSON(data, {
+        style: myStyle,
+        onEachFeature: function (feature, layer) {
+            layer.bindPopup("<h3> Airline: " + feature.properties.airline + "</h3> <hr> <h3> Destination: " + feature.properties.dst + "</h3>");
+        }
+    })
+    .addTo(map);
 });
-
-// 13.5.4
-
